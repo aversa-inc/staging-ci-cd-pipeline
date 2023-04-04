@@ -1,0 +1,42 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+  tomcat:
+    uri-encoding: UTF-8
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+siteUrl: "http://localhost:8080"
+emailDomain: "beta.saule.aversa.ca"
+clinicianRegistrationEmail: "myasir_merchant@hotmail.com"
+auth0:
+  tenant: aversa-staging.us.auth0.com
+gcmSnsPlatformApplicationArn: "arn:aws:sns:us-east-1:138990259196:app/GCM/saule-service-gcm-platform-application-beta"
+
+---
+spring:
+  config:
+    activate:
+      on-profile: beta
+siteUrl: "https://api.beta.saule.aversa.ca"
+emailDomain: "beta.saule.aversa.ca"
+clinicianRegistrationEmail: "myasir_merchant@hotmail.com"
+auth0:
+  tenant: aversa-staging.us.auth0.com
+gcmSnsPlatformApplicationArn: "arn:aws:sns:us-east-1:138990259196:app/GCM/saule-service-gcm-platform-application-beta"
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+siteUrl: "https://api.saule.aversa.ca"
+emailDomain: "saule.aversa.ca"
+clinicianRegistrationEmail: "admin@aversa.ca"
+auth0:
+  tenant: aversa-prod.us.auth0.com
+gcmSnsPlatformApplicationArn: "arn:aws:sns:us-east-1:871653551639:app/GCM/saule-service-gcm-platform-application-beta"
