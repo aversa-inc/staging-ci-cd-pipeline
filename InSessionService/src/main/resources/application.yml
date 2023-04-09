@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 80
   servlet:
     context-path: /
   tomcat:
@@ -10,7 +10,7 @@ spring:
   config:
     activate:
       on-profile: local
-siteUrl: "http://localhost:8080"
+siteUrl: "http://localhost:80"
 emailDomain: "beta.saule.aversa.ca"
 clinicianRegistrationEmail: "myasir_merchant@hotmail.com"
 auth0:

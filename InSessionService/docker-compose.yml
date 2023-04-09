@@ -7,4 +7,4 @@ services:
       dockerfile: Dockerfile
     image: aversa/insession-service:latest
     ports:
-      - 8080:8080
+      - 80:80

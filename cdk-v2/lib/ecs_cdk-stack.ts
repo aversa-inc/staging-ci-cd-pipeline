@@ -24,7 +24,7 @@ export class EcsCdkStack extends cdk.Stack {
     const githubRepository = new cdk.CfnParameter(this, "githubRespository", {
         type: "String",
         description: "Github source code repository",
-        default: "amazon-ecs-fargate-cdk-v2-cicd" 
+        default: "InsessionServiceCDK" 
     })
 
     const githubPersonalTokenSecretName = new cdk.CfnParameter(this, "githubPersonalTokenSecretName", {
@@ -50,6 +50,7 @@ export class EcsCdkStack extends cdk.Stack {
       ],
     });
 
+
     const loadbalancer = new ApplicationLoadBalancer(this, "lb", {
       vpc,
       internetFacing: true,
@@ -57,10 +58,11 @@ export class EcsCdkStack extends cdk.Stack {
         subnetType: ec2.SubnetType.PUBLIC,
       }),
     });
-
+    
     const cluster = new ecs.Cluster(this, "Cluster", {
       vpc,
       clusterName: "fargate-node-cluster",
+      containerInsights: true
     });
     const ecrRepo = new ecr.Repository(this, 'ecrRepo', {
     	repositoryName: "fargate-insession-service",
@@ -83,12 +85,11 @@ export class EcsCdkStack extends cdk.Stack {
           image: ecs.ContainerImage.fromRegistry("amazon/amazon-ecs-sample"),
           containerName: "insession-service",
           family: "fargate-node-task-defn",
-          containerPort: 8080,
+          containerPort: 80,
           executionRole,
         },
-        cpu: 256,
         memoryLimitMiB: 512,
-        desiredCount: 2,
+        desiredCount: 1,
         serviceName: "fargate-insession-service",
         taskSubnets: vpc.selectSubnets({
           subnetType: ec2.SubnetType.PRIVATE_WITH_NAT,
@@ -96,6 +97,7 @@ export class EcsCdkStack extends cdk.Stack {
         loadBalancer: loadbalancer,
       }
     );
+   
     
 
     /**
